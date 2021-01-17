@@ -310,7 +310,7 @@
                                                     <strong>`+kelas.nama_kelas+`</strong>
                                                 </span>
                                                 <span>
-                                                    <a href="<?= base_url()?>kelas/detail/`+kelas.link+`" class="btn btn-sm btn-info"><i class="fa fa-sign-in-alt"></i></a>
+                                                    <a href="<?= base_url()?>`+kelas.link+`" class="btn btn-sm btn-info"><i class="fa fa-sign-in-alt"></i></a>
                                                 </span>
                                             </li>
                                             <li class="list-group-item"><i class="fa fa-users mr-2"></i>`+kelas.peserta+` Orang</li>

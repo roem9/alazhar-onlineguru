@@ -368,7 +368,7 @@ class Arab_model extends CI_MODEL{
         }
 
         public function add_pembelian(){
-            $user = $this->get_user_by_id($this->session->userdata("id"));
+            $user = $this->get_user_by_id($this->session->userdata("id_civitas"));
 
             $data = [
                 "tgl_pembelian" => date("Y-m-d H:i:s"),

@@ -522,7 +522,7 @@
         
         $.ajax({
             type: "POST",
-            url: "<?= base_url()?>kelas/get_nilai",
+            url: "<?= base_url()?>hifdzi1/get_nilai",
             dataType: "JSON",
             data: {id_kelas: "<?= $link?>", latihan: latihan, pertemuan: pertemuan},
             success: function(data){
@@ -581,7 +581,7 @@
 
             $.ajax({
                 method: "POST",
-                url: "<?= base_url()?>kelas/input_nilai",
+                url: "<?= base_url()?>hifdzi1/input_nilai",
                 dataType: "JSON",
                 data: {id_kelas: "<?= $link?>", latihan: latihan, pertemuan: pertemuan, data: data},
                 success: function(data){
@@ -902,7 +902,7 @@
                 let pertemuan = $(this).val();
                 $.ajax({
                     type : "POST",
-                    url : "<?= base_url()?>kelas/ajax_pertemuan",
+                    url : "<?= base_url()?>hifdzi1/ajax_pertemuan",
                     dataType : "JSON",
                     data : {id_kelas:"<?= $link?>", pertemuan:pertemuan},
                     success : function(data){
@@ -1142,7 +1142,7 @@
 
         function detail(id){
             $.ajax({
-                url : "<?=base_url()?>kelas/get_detail_kelas",
+                url : "<?=base_url()?>hifdzi1/get_detail_kelas",
                 method : "POST",
                 data : {id : id},
                 async : true,
@@ -1254,13 +1254,13 @@
 
         function detail_peserta(id){
             $.ajax({
-                url : "<?=base_url()?>kelas/get_detail_peserta",
+                url : "<?=base_url()?>hifdzi1/get_detail_peserta",
                 method : "POST",
                 data : {id_kelas: "<?= $kelas['id_kelas']?>", id : id},
                 async : true,
                 dataType : 'json',
                 success : function(data){
-                    console.log(data)
+                    // console.log(data)
                     $("#modalDetailPesertaTitle").html(data.peserta.nama);
                     $("input[name='id_kelas']").val(data.id_kelas);
                     

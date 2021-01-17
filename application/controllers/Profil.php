@@ -4,14 +4,14 @@ class Profil extends CI_CONTROLLER{
         parent::__construct();
         $this->load->model('Arab_model');
         $this->load->model('Admin_model');
-        if($this->session->userdata('status') != "login"){
+        if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
-			redirect(base_url("login"));
+			redirect(base_url("auth"));
 		}
     }
 
     public function index(){
-        $id = $this->session->userdata("id");
+        $id = $this->session->userdata("id_civitas");
         $data['title'] = "Profil";
         $data['user'] = $this->Admin_model->get_one("civitas", ["id_civitas" => $id]);
 
