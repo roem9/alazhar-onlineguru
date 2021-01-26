@@ -56,15 +56,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="row" id="dataFaq">
+            <div class="row" id="listLatihan">
                 <div class="col-12">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-info d-flex justify-content-between">
-                        FAQ
-                            <a href="#modalFaq" data-toggle="modal"><i class="fa fa-plus-square"></i></a>
+                            Koreksi Latihan
                         </li>
-                        <input type="text" name="search_faq" id="search_faq" class="form-control form-control-lg mt-1 mb-1" placeholder="cari faq ..." autocomplete="off">
-                        <div id="list-faq"></div>
+                        <div id="list-latihan"></div>
                     </ul>
                 </div>
             </div>
@@ -374,7 +372,7 @@
     $("#titleForm").hide();
     $("#btnInputNilai").hide();
     $("#input_pertemuan").hide();
-    $("#dataFaq").hide();
+    $("#listLatihan").hide();
     // $("#listPeserta").hide();
     $("#dataPertemuan").hide();
     $("#listPeserta").hide();
@@ -426,15 +424,15 @@
         $("#dataAbsen").hide();
         $("#dataLatihan").hide();
         $("#inputNilai").show();
-        $("#dataFaq").hide();
+        $("#listLatihan").hide();
         $("#listPeserta").hide();
 
         $(".inputNilai").addClass("btn-info");
         $(".inputNilai").addClass("text-light");
         $(".notifikasi").removeClass("btn-info");
         $(".notifikasi").removeClass("text-light");
-        $(".faq").removeClass("btn-info");
-        $(".faq").removeClass("text-light");
+        $(".latihan").removeClass("btn-info");
+        $(".latihan").removeClass("text-light");
     })
     
     $("#dataKelas").on("click", ".notifikasi", function(){
@@ -448,24 +446,41 @@
         $("#dataLatihan").hide();
         $("#inputNilai").hide();
         $("#titleForm").hide();
-        $("#dataFaq").hide();
+        $("#listLatihan").hide();
         $("#listPeserta").hide();
 
         $(".inputNilai").removeClass("btn-info");
         $(".inputNilai").removeClass("text-light");
         $(".notifikasi").addClass("btn-info");
         $(".notifikasi").addClass("text-light");
-        $(".faq").removeClass("btn-info");
-        $(".faq").removeClass("text-light");
+        $(".latihan").removeClass("btn-info");
+        $(".latihan").removeClass("text-light");
     })
     
-    $("#dataKelas").on("click", ".faq", function(){
-        // faq 
-            $("#search_faq").val("")
-            let search = "";
-            let program = "<?= $kelas['program']?>"
-            faq(search, program)
-        // faq 
+    $("#dataKelas").on("click", ".latihan", function(){
+        // list latihan
+            html = "";
+
+            $.ajax({
+                url: "<?= base_url()?>tarkibi2/get_list_koreksi_latihan",
+                dataType: "JSON",
+                method: "POST",
+                data: {id_kelas:"<?= $kelas['id_kelas']?>"},
+                success: function(data){
+                    console.log(data)
+                    data.list.forEach(list => {
+                        html += `
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>`+list.peserta.nama+`<br><b>`+list.pertemuan+`</b></span>
+                                <span>
+                                    <a href="<?= base_url()?>tarkibi2/koreksi/`+list.link+`" class="btn btn-sm btn-primary">periksa</a>
+                                </span>
+                            </li>`;
+                    });
+                    $("#list-latihan").html(html);
+                }
+            })
+        // list latihan
         
         $("#dataPeserta").hide();
         delete_msg()
@@ -477,15 +492,15 @@
         $("#dataLatihan").hide();
         $("#inputNilai").hide();
         $("#titleForm").hide();
-        $("#dataFaq").show();
+        $("#listLatihan").show();
         $("#listPeserta").hide();
 
         $(".inputNilai").removeClass("btn-info");
         $(".inputNilai").removeClass("text-light");
         $(".notifikasi").removeClass("btn-info");
         $(".notifikasi").removeClass("text-light");
-        $(".faq").addClass("btn-info");
-        $(".faq").addClass("text-light");
+        $(".latihan").addClass("btn-info");
+        $(".latihan").addClass("text-light");
     })
     
     $("#dataKelas").on("click", "#btnDataPeserta", function(){
@@ -1021,13 +1036,14 @@
                                             <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-success detail"><i class="fa fa-book"></i></a>
                                         </div>
                                         <span>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info notifikasi"><i class="fa fa-comment"></i></a>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info faq">FAQ</a>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info inputNilai">input nilai</a>
+                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
+                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary inputNilai">input nilai</a>
+                                            <a href="<?= base_url()?>tarkibi2/list_koreksi/`+data.kelas.link+`" class="btn btn-sm btn-warning">latihan</a>
                                         </span>
                                     </li>
                                 </ul>
                             </div>`;
+                                            // <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info faq">FAQ</a>
                     $("#dataKelas").html(html);
 
 

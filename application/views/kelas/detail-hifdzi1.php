@@ -97,13 +97,13 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a href="#" class='nav-link' id="btn-form-1"><i class="fas fa-clock"></i></a>
+                                <a href="javascript:void(0)" class='nav-link' id="btn-form-1"><i class="fas fa-clock"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class='nav-link active' id="btn-form-2"><i class="fas fa-tasks"></i></a>
+                                <a href="javascript:void(0)" class='nav-link active' id="btn-form-2"><i class="fas fa-tasks"></i></a>
                             </li>
                             <!-- <li class="nav-item">
-                                <a href="#" class='nav-link' id="btn-form-2"><i class="fas fa-users"></i></a>
+                                <a href="javascript:void(0)" class='nav-link' id="btn-form-2"><i class="fas fa-users"></i></a>
                             </li> -->
                         </ul>
                     </div>
@@ -264,13 +264,13 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a href="#" class='nav-link' id="btn-form-2-1"><i class="fas fa-clock"></i></a>
+                                <a href="javascript:void(0)" class='nav-link' id="btn-form-2-1"><i class="fas fa-clock"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class='nav-link active' id="btn-form-2-2"><i class="fas fa-list-ol"></i></a>
+                                <a href="javascript:void(0)" class='nav-link active' id="btn-form-2-2"><i class="fas fa-list-ol"></i></a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class='nav-link' id="btn-form-2-3"><i class="fas fa-list-ol"></i></a>
+                                <a href="javascript:void(0)" class='nav-link' id="btn-form-2-3"><i class="fas fa-list-ol"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -1012,7 +1012,7 @@
                                         <div class="">
                                             <i class="fa fa-users mr-2"></i>`+data.kelas.peserta+` Orang
                                         </div>
-                                        <a href="#" class="btn btn-sm btn-warning text-light" id="btnDataPeserta"><i class="fa fa-users"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-warning text-light" id="btnDataPeserta"><i class="fa fa-users"></i></a>
                                     </li>
                                     <li class="list-group-item"><i class="fa fa-book mr-2"></i>Pertemuan `+data.kelas.pertemuan.length+`</li>
                                     <li class="list-group-item d-flex justify-content-between">
@@ -1021,15 +1021,15 @@
                                             <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-success detail"><i class="fa fa-book"></i></a>
                                         </div>
                                         <span>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info notifikasi"><i class="fa fa-comment"></i></a>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info faq">FAQ</a>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info inputNilai">input nilai</a>
+                                            <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
+                                            <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary inputNilai">input nilai</a>
                                         </span>
                                     </li>
                                 </ul>
                             </div>`;
                     $("#dataKelas").html(html);
 
+                                            // <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info faq">FAQ</a>
 
                     html = `<div class="col-12 mb-2">
                             <select name="pertemuan" id="rekapPertemuan" class="form-control form-control-sm">
@@ -1107,7 +1107,7 @@
                                     `+peserta.nama+`<br><span class="btn btn-sm btn-outline-dark">`+peserta.nilai+`</span>
                                 </span>
                                 <span>
-                                    <a href="#" class="btn btn-sm `+button+`" id="`+sertifikat+`" data-id="`+peserta.id_sertifikat+`"><i class="fa fa-award"></i></a>
+                                    <a href="javascript:void(0)" class="btn btn-sm `+button+`" id="`+sertifikat+`" data-id="`+peserta.id_sertifikat+`"><i class="fa fa-award"></i></a>
                                 </span>
                             </li>
                         `;
@@ -1171,11 +1171,11 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Pertemuan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-primary mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>`;
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-primary mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>`;
                             if(absen.includes("Pertemuan "+i)){
-                                html += `<a href="#" class="btn btn-sm btn-primary" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offAbsen"><i class="fa fa-user-check"></i></a>`;
+                                html += `<a href="javascript:void(0)" class="btn btn-sm btn-primary" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offAbsen"><i class="fa fa-user-check"></i></a>`;
                             } else {
-                                html += `<a href="#" class="btn btn-sm btn-outline-info" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onAbsen"><i class="fa fa-user-check"></i></a>`;
+                                html += `<a href="javascript:void(0)" class="btn btn-sm btn-outline-info" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onAbsen"><i class="fa fa-user-check"></i></a>`;
                             }
                             
                             html += `
@@ -1187,7 +1187,7 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Pertemuan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-outline-info mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-outline-info mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
                                             </div>
                                         </div>
                                     </li>`;
@@ -1211,7 +1211,7 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Ujian Pekan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-primary mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-primary mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
                                             </div>
                                         </div>
                                     </li>`;
@@ -1220,7 +1220,7 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Ujian Pekan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-outline-info mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-outline-info mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
                                             </div>
                                         </div>
                                     </li>`;
@@ -1232,7 +1232,7 @@
                                     <div class="d-flex justify-content-between">
                                         <label for="per">Ujian Akhir</label>
                                         <div class="">
-                                            <a href="#" class="btn btn-sm btn-primary mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-primary mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
                                         </div>
                                     </div>
                                 </li>`;
@@ -1241,7 +1241,7 @@
                                     <div class="d-flex justify-content-between">
                                         <label for="per">Ujian Akhir</label>
                                         <div class="">
-                                            <a href="#" class="btn btn-sm btn-outline-info mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-outline-info mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
                                         </div>
                                     </div>
                                 </li>`;

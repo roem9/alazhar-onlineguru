@@ -4,6 +4,7 @@ class Tarkibi2 extends CI_CONTROLLER{
         parent::__construct();
         $this->load->model('Arab_model');
         $this->load->model('Admin_model');
+        $this->load->model('Tarkibi2_model');
         if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
 			redirect(base_url("auth"));
@@ -131,10 +132,46 @@ class Tarkibi2 extends CI_CONTROLLER{
         $this->load->view("templates/footer-user", $data);
     }
 
+    public function koreksi($id){
+        $data_latihan = $this->Admin_model->get_one("latihan_isian_peserta", ["md5(id)" => $id]);
+        $data['data_latihan'] = $data_latihan;
+        $data['data_latihan']['jawaban'] = explode("###", $data_latihan['jawaban']);
+        $data['data_latihan']['pembahasan'] = explode("###", $data_latihan['pembahasan']);
+
+        if($data_latihan['pertemuan'] == "Pertemuan 1"){
+            $page = "tarkibi_2/tugas/pertemuan1";
+        }
+
+        $data['title'] = "Tugas ".$data_latihan['pertemuan'];
+
+        $this->load->view("templates/header-user", $data);
+        $this->load->view($page, $data);
+        $this->load->view("templates/footer-user", $data);
+    }
+
+    public function list_koreksi($id){
+        $data['kelas'] = $this->Admin_model->get_one("kelas", ["md5(id_kelas)" => $id]);
+        $data['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id, "hapus" => 0]));
+        $data['materi'] = COUNT($this->Admin_model->get_all("materi_kelas", ["md5(id_kelas)" => $id]));
+        $data['title'] = "List Koreksi Tugas";
+
+        $list = $this->Admin_model->get_all("latihan_isian_peserta", ["md5(id_kelas)" => $id, "periksa" => 0]);
+        $data['list'] = [];
+        foreach ($list as $i => $list) {
+            $data['list'][$i] = $list;
+            $peserta = $this->Admin_model->get_one("user", ["id_user" => $list['id_user']]);
+            $data['list'][$i]['peserta'] = $peserta;
+        }
+
+        $this->load->view("templates/header-user", $data);
+        $this->load->view("tarkibi_2/koreksi-latihan", $data);
+        $this->load->view("templates/footer-user", $data);
+    }
+
     public function ajax_list(){
         $id = $this->session->userdata("id_civitas");
         $data = [];
-        $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id]);
+        $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id, "status" => "aktif"]);
         foreach ($kelas as $i => $kelas) {
             $data['kelas'][$i] = $kelas;
             $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas']]));
@@ -445,6 +482,11 @@ class Tarkibi2 extends CI_CONTROLLER{
 
             echo json_encode($data);
         }
+
+        public function get_list_koreksi_latihan(){
+            $data = $this->Tarkibi2_model->get_list_koreksi_latihan();
+            echo json_encode($data);
+        }
     // get 
 
     // nilai syahadah 
@@ -607,6 +649,16 @@ class Tarkibi2 extends CI_CONTROLLER{
     // faq 
 
     // add 
+        
+        public function add_nilai_isian(){
+            $id = $this->input->post("id");
+            $nilai = $this->input->post("nilai");
+            $this->Admin_model->edit_data("latihan_isian_peserta", ["id" => $id], ["nilai" => $nilai, "periksa" => 1]);
+
+            $data = $this->Admin_model->get_one("latihan_isian_peserta", ["id" => $id]);
+            redirect(base_url().'tarkibi2/list_koreksi/'.md5($data['id_kelas']), 'refresh');
+        }
+
         public function add_pertemuan(){
             $data = [
                 "id_kelas" => $this->input->post("id_kelas"),
@@ -663,6 +715,11 @@ class Tarkibi2 extends CI_CONTROLLER{
                 }
             }
 
+            echo json_encode("1");
+        }
+
+        public function add_latihan_pembahasan(){
+            $data = $this->Tarkibi2_model->add_latihan_pembahasan();
             echo json_encode("1");
         }
     // add 
