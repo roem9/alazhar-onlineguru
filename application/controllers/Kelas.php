@@ -341,15 +341,17 @@ class Kelas extends CI_CONTROLLER{
     // sertifikat 
         public function add_sertifikat(){
             $id_sertifikat = $this->input->post("id_sertifikat");
+            $data_sertifikat = $this->Admin_model->get_one("kelas_user", ["id" => $id_sertifikat]);
+            $nilai = $this->nilai_sertifikat($data_sertifikat['id_kelas'], $data_sertifikat['id_user']);
             $data = $this->Admin_model->get_one("kelas_user", ["id" => $id_sertifikat]);
-            $this->Admin_model->edit_data("kelas_user", ["id" => $id_sertifikat], ["sertifikat" => "1"]);
+            $this->Admin_model->edit_data("kelas_user", ["id" => $id_sertifikat], ["sertifikat" => "1", "nilai" => $nilai]);
             echo json_encode($data['id_kelas']);
         }
         
         public function delete_sertifikat(){
             $id_sertifikat = $this->input->post("id_sertifikat");
             $data = $this->Admin_model->get_one("kelas_user", ["id" => $id_sertifikat]);
-            $this->Admin_model->edit_data("kelas_user", ["id" => $id_sertifikat], ["sertifikat" => "0"]);
+            $this->Admin_model->edit_data("kelas_user", ["id" => $id_sertifikat], ["sertifikat" => "0", "nilai" => ""]);
             echo json_encode($data['id_kelas']);
         }
     // sertifikat 
