@@ -21,7 +21,7 @@
             <div class="row" id="dataLatihan"></div>
             <div class="row" id="inputNilai">
                 <div class="col-12">
-                    <select name="input_latihan" id="input_latihan" class="form-control form-control-sm">
+                    <select name="input_latihan" id="input_latihan" class="form-control form-control-md">
                         <option value="">Pilih Input Nilai</option>
                         <option value="Tambahan">Latihan Tambahan</option>
                         <option value="Hafalan">Latihan Hafalan</option>
@@ -34,7 +34,7 @@
                     </select>
                 </div>
                 <div class="col-12">
-                    <select name="input_pertemuan" id="input_pertemuan" class="form-control form-control-sm">
+                    <select name="input_pertemuan" id="input_pertemuan" class="form-control form-control-md">
                         <option value="">Pilih Pertemuan</option>
                         <?php for ($i=1; $i < 25; $i++) :?>
                             <option value="Pertemuan <?= $i?>">Pertemuan <?= $i?></option>
@@ -193,11 +193,11 @@
                             <input type="hidden" name="id_kelas" id="id_kelas_add" value="<?= $kelas['id_kelas']?>">
                             <div class="form-group">
                                 <label for="soal_add">Soal</label>
-                                <textarea name="soal" id="soal_add" class="form-control form-control-sm" required></textarea>
+                                <textarea name="soal" id="soal_add" class="form-control form-control-md" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="jawaban_add">Jawaban</label>
-                                <textarea name="jawaban" id="jawaban_add" class="form-control form-control-sm" required></textarea>
+                                <textarea name="jawaban" id="jawaban_add" class="form-control form-control-md" required></textarea>
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-sm btn-primary" id="btnAddFaq">Tambah FAQ</button>
@@ -231,11 +231,11 @@
                         <input type="hidden" name="id_faq" id="id_faq_edit">
                         <div class="form-group">
                             <label for="soal_edit">Soal</label>
-                            <textarea name="soal" id="soal_edit" class="form-control form-control-sm" required></textarea>
+                            <textarea name="soal" id="soal_edit" class="form-control form-control-md" required></textarea>
                         </div>
                         <div class="form-group">
                             <label for="jawaban_edit">Jawaban</label>
-                            <textarea name="jawaban" id="jawaban_edit" class="form-control form-control-sm" required></textarea>
+                            <textarea name="jawaban" id="jawaban_edit" class="form-control form-control-md" required></textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-sm btn-danger mr-1" id="btnDeleteFaq">Delete</button>
@@ -290,7 +290,7 @@
                         <div id="form-2-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <select name="jenis_nilai" id="jenis_nilai" class="form-control form-control-sm mb-2">
+                                    <select name="jenis_nilai" id="jenis_nilai" class="form-control form-control-md mb-2">
                                         <option value="Harian">Tugas Harian Form</option>
                                         <option value="Tambahan">Tugas Harian Tambahan</option>
                                         <option value="Hafalan">Tugas Harian Hafalan</option>
@@ -540,7 +540,7 @@
                                 </div>
                                 <div class="col-3">
                                     <input type="hidden" name="id_nilai" value="`+peserta.id_user+`|`+peserta.id_nilai+`">
-                                    <input type="text" name="nilai" value="`+peserta.nilai+`" class="form-control form-control-sm">
+                                    <input type="text" name="nilai" value="`+peserta.nilai+`" class="form-control form-control-md">
                                 </div>
                             </div>
                         </li>
@@ -1012,18 +1012,22 @@
                                         <div class="">
                                             <i class="fa fa-users mr-2"></i>`+data.kelas.peserta+` Orang
                                         </div>
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-warning text-light" id="btnDataPeserta"><i class="fa fa-users"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-sm list-group-item-info" id="btnDataPeserta"><i class="fa fa-users"></i></a>
                                     </li>
                                     <li class="list-group-item"><i class="fa fa-book mr-2"></i>Pertemuan `+data.kelas.pertemuan.length+`</li>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <div class="">
-                                            <a href="#modalSertifikat" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-primary sertifikat"><i class="fa fa-award"></i></a>
-                                            <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-success detail"><i class="fa fa-book"></i></a>
-                                            <a target="_blank" href="<?= base_url()?>hifdzi1/rekap_nilai/`+data.kelas.link+`" class="btn btn-sm btn-info"><i class="fa fa-download text-light"></i></a>
+                                            <a href="#modalSertifikat" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md list-group-item-primary sertifikat"><i class="fa fa-award"></i></a>
+                                            <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md list-group-item-success detail"><i class="fa fa-book"></i></a>
                                         </div>
                                         <span>
-                                            <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
-                                            <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary inputNilai">input nilai</a>
+                                            <a target="_blank" href="<?= base_url()?>hifdzi1/rekap_nilai/`+data.kelas.link+`" class="btn btn-md btn-success"><i class="fa fa-download"></i></a>
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>
+                                            <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
+                                            <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md btn-secondary inputNilai">input nilai</a>
                                         </span>
                                     </li>
                                 </ul>
@@ -1033,7 +1037,7 @@
                                             // <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info faq">FAQ</a>
 
                     html = `<div class="col-12 mb-2">
-                            <select name="pertemuan" id="rekapPertemuan" class="form-control form-control-sm">
+                            <select name="pertemuan" id="rekapPertemuan" class="form-control form-control-md">
                                 <option value="">Pilih Pertemuan</option>`;
                             
                     data.kelas.pertemuan.forEach(pertemuan => {
@@ -1145,7 +1149,7 @@
                                         `+element.nama+`<br>
                                     </span>
                                     <div class="form-group mt-1">
-                                        <select name="nilai" id="nilai`+element.id_sertifikat+`" class="form-control form-control-sm mr-1">
+                                        <select name="nilai" id="nilai`+element.id_sertifikat+`" class="form-control form-control-md mr-1">
                                             <option value="">Nilai</option>
                                             <option `+mumtaz+` value="ممتاز">ممتاز</option>
                                             <option `+jj+` value="جيد جدا">جيد جدا</option>
