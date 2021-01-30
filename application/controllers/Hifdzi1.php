@@ -4,6 +4,11 @@ class Hifdzi1 extends CI_CONTROLLER{
         parent::__construct();
         $this->load->model('Arab_model');
         $this->load->model('Admin_model');
+        
+        ini_set('xdebug.var_display_max_depth', '10');
+        ini_set('xdebug.var_display_max_children', '256');
+        ini_set('xdebug.var_display_max_data', '1024');
+
         if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
 			redirect(base_url("auth"));
@@ -11,12 +16,12 @@ class Hifdzi1 extends CI_CONTROLLER{
     }
 
     public function input(){
-        $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => "1"]);
+        $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => "2"]);
         foreach ($peserta as $peserta) {
             for ($i=1; $i < 25; $i++) { 
                 $pertemuan = "Pertemuan ".$i;
                 $data = [
-                    "id_kelas" => 1,
+                    "id_kelas" => 2,
                     "id_user" => $peserta['id_user'],
                     "pertemuan" => $pertemuan,
                     "latihan" => "Harian",
@@ -29,7 +34,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             for ($i=1; $i < 25; $i++) { 
                 $pertemuan = "Pertemuan ".$i;
                 $data = [
-                    "id_kelas" => 1,
+                    "id_kelas" => 2,
                     "id_user" => $peserta['id_user'],
                     "pertemuan" => $pertemuan,
                     "latihan" => "Hafalan",
@@ -42,7 +47,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             for ($i=1; $i < 25; $i++) { 
                 $pertemuan = "Pertemuan ".$i;
                 $data = [
-                    "id_kelas" => 1,
+                    "id_kelas" => 2,
                     "id_user" => $peserta['id_user'],
                     "pertemuan" => $pertemuan,
                     "latihan" => "Tambahan",
@@ -55,7 +60,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             for ($i=1; $i < 5; $i++) { 
                 $pertemuan = "Ujian Pekan ".$i;
                 $data = [
-                    "id_kelas" => 1,
+                    "id_kelas" => 2,
                     "id_user" => $peserta['id_user'],
                     "pertemuan" => $pertemuan,
                     "latihan" => "Form",
@@ -68,7 +73,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             for ($i=1; $i < 5; $i++) { 
                 $pertemuan = "Ujian Pekan ".$i;
                 $data = [
-                    "id_kelas" => 1,
+                    "id_kelas" => 2,
                     "id_user" => $peserta['id_user'],
                     "pertemuan" => $pertemuan,
                     "latihan" => "Input",
@@ -80,7 +85,7 @@ class Hifdzi1 extends CI_CONTROLLER{
 
             
             $data = [
-                "id_kelas" => 1,
+                "id_kelas" => 2,
                 "id_user" => $peserta['id_user'],
                 "pertemuan" => "Ujian Pertengahan",
                 "latihan" => "Input",
@@ -90,7 +95,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             $this->Admin_model->add_data("latihan_peserta", $data);
             
             $data = [
-                "id_kelas" => 1,
+                "id_kelas" => 2,
                 "id_user" => $peserta['id_user'],
                 "pertemuan" => "Ujian Akhir",
                 "latihan" => "Form",
@@ -100,7 +105,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             $this->Admin_model->add_data("latihan_peserta", $data);
             
             $data = [
-                "id_kelas" => 1,
+                "id_kelas" => 2,
                 "id_user" => $peserta['id_user'],
                 "pertemuan" => "Ujian Akhir",
                 "latihan" => "Input",
@@ -122,7 +127,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id]);
             foreach ($kelas as $i => $kelas) {
                 $data['kelas'][$i] = $kelas;
-                $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas']]));
+                $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas'], "hapus" => 0]));
             }
         // kelas & program
 
@@ -137,7 +142,7 @@ class Hifdzi1 extends CI_CONTROLLER{
         $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id]);
         foreach ($kelas as $i => $kelas) {
             $data['kelas'][$i] = $kelas;
-            $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas']]));
+            $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas'], "hapus" => 0]));
             $data['kelas'][$i]['pertemuan'] = COUNT($this->Admin_model->get_all("materi_kelas", ["id_kelas" => $kelas['id_kelas']]));
             $data['kelas'][$i]['link'] = md5($kelas['id_kelas']);
         }
@@ -151,13 +156,13 @@ class Hifdzi1 extends CI_CONTROLLER{
         // $kelas = $this->Admin_model->get_one("kelas", ["MD5(id_kelas)" => $id_kelas]);
         // foreach ($kelas as $i => $kelas) {
             $data['kelas'] = $this->Admin_model->get_one("kelas", ["MD5(id_kelas)" => $id_kelas]);
-            $data['kelas']['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["MD5(id_kelas)" => $id_kelas]));
+            $data['kelas']['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["MD5(id_kelas)" => $id_kelas, "hapus" => 0]));
             $data['kelas']['pertemuan'] = $this->Admin_model->get_all("materi_kelas", ["MD5(id_kelas)" => $id_kelas], "id");
             $data['kelas']['link'] = $id_kelas;
             $data['faq'] = $this->Admin_model->get_all("faq", ["program" => $data['kelas']['program']]);
 
             $data['peserta'] = [];
-            $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas]);
+            $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas, "hapus" => 0]);
             foreach ($peserta as $i => $peserta) {
                 $detail = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
                 $data['peserta'][$i] = $detail;
@@ -183,7 +188,7 @@ class Hifdzi1 extends CI_CONTROLLER{
 
     public function ajax_detail(){
         $id_kelas = $this->input->post('id_kelas');
-        $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas]);
+        $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas, "hapus" => 0]);
         foreach ($peserta as $i => $peserta) {
             $data['peserta'][$i] = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
         }
@@ -199,7 +204,7 @@ class Hifdzi1 extends CI_CONTROLLER{
         $data['absen'] = [];
 
         $kelas = $this->Admin_model->get_one("kelas", ["md5(id_kelas)" => $id_kelas]);
-        $listpeserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas]);
+        $listpeserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas, "hapus" => 0]);
         foreach ($listpeserta as $i => $peserta) {
             $hadir = $this->Admin_model->get_one("presensi_peserta", ["md5(id_kelas)" => $id_kelas, "id_user" => $peserta['id_user'], "pertemuan" => $pertemuan]);
             if(!isset($hadir)){
@@ -251,6 +256,66 @@ class Hifdzi1 extends CI_CONTROLLER{
         echo json_encode($data);
     }
 
+    public function rekap_nilai($id_kelas){
+        $kelas = $this->Admin_model->get_one("kelas", ["md5(id_kelas)" => $id_kelas]);
+        $data['kelas'] = $kelas;
+
+        
+        $filename = "Rekap Nilai Kelas " . $kelas['nama_kelas'];
+
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
+
+        $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas'], "hapus" => 0]);
+        $data['peserta'] = [];
+        foreach ($peserta as $i => $peserta) {
+            $data_peserta = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
+            $data['peserta'][$i]['data'] = $data_peserta;
+            
+            $data_absen = $this->Admin_model->get_all("presensi_peserta", ["id_user" => $peserta['id_user'], "id_kelas" => $peserta['id_kelas']]);
+            $data['peserta'][$i]['absen'] = $data_absen;
+
+            $data_nilai_harian = $this->Admin_model->get_all("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "latihan" => "Harian"]);
+            $data['peserta'][$i]['nilai_harian'] = $data_nilai_harian;
+            
+            $data_nilai_hafalan = $this->Admin_model->get_all("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "latihan" => "Hafalan"]);
+            $data['peserta'][$i]['nilai_hafalan'] = $data_nilai_hafalan;
+            
+            $data_nilai_tambahan = $this->Admin_model->get_all("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "latihan" => "Tambahan"]);
+            $data['peserta'][$i]['nilai_tambahan'] = $data_nilai_tambahan;
+
+            // nilai ujian
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 1", "latihan" => "Form"]);
+                if($nilai){$data['peserta'][$i]['ujian'][0] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][0] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 1", "latihan" => "Input"]);
+                if($nilai){$data['peserta'][$i]['ujian'][1] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][1] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 2", "latihan" => "Form"]);
+                if($nilai){$data['peserta'][$i]['ujian'][2] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][2] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 2", "latihan" => "Input"]);
+                if($nilai){$data['peserta'][$i]['ujian'][3] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][3] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pertengahan", "latihan" => "Input"]);
+                if($nilai){$data['peserta'][$i]['ujian'][4] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][4] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 3", "latihan" => "Form"]);
+                if($nilai){$data['peserta'][$i]['ujian'][5] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][5] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 3", "latihan" => "Input"]);
+                if($nilai){$data['peserta'][$i]['ujian'][6] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][6] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Pekan 4", "latihan" => "Form"]);
+                if($nilai){$data['peserta'][$i]['ujian'][7] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][7] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Akhir", "latihan" => "Form"]);
+                if($nilai){$data['peserta'][$i]['ujian'][8] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][8] = 0;};
+                $nilai = $this->Admin_model->get_one("latihan_peserta", ["id_kelas" => $peserta['id_kelas'], "id_user" => $peserta['id_user'], "pertemuan" => "Ujian Akhir", "latihan" => "Input"]);
+                if($nilai){$data['peserta'][$i]['ujian'][9] = $nilai['nilai'];} else {$data['peserta'][$i]['ujian'][9] = 0;};
+            // nilai ujian
+        }
+
+        usort($data['peserta'], function($a, $b) {
+            return $a['data']['nama'] <=> $b['data']['nama'];
+        });
+
+        // var_dump($data);
+        $this->load->view("pages/hifdzi1/rekap-nilai", $data);
+    }
+
     // edit 
         public function list_pertemuan(){
             $id = $this->input->post("id_kelas");
@@ -299,7 +364,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             $data = $this->Admin_model->get_one("kelas", ["id_kelas" => $id]);
             
             // $data['pertemuan'] = $this->Admin_model->get_all("materi_kelas", ["id_kelas" => $id]);
-            $data['jumpeserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $id]));
+            $data['jumpeserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $id, "hapus" => 0]));
             $per = $this->Admin_model->get_all("materi_kelas", ["id_kelas" => $id]);
             foreach ($per as $i => $per) {
                 $data['pertemuan'][$i] = $per;
@@ -307,7 +372,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             }
 
             $data['absen'] = $this->Admin_model->get_all("materi_kelas", ["id_kelas" => $id, "absen" => 0]);
-            $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $id]);
+            $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $id, "hapus" => 0]);
             foreach ($peserta as $i => $peserta) {
                 $data['peserta'][$i] = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
             }
@@ -400,7 +465,7 @@ class Hifdzi1 extends CI_CONTROLLER{
             $latihan = $this->input->post("latihan");
             $pertemuan = $this->input->post("pertemuan");
 
-            $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas]);
+            $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas, "hapus" => 0]);
             foreach ($peserta as $i => $peserta) {
                 $data['peserta'][$i] = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
                 
@@ -431,7 +496,7 @@ class Hifdzi1 extends CI_CONTROLLER{
 
             $data['kelas'] = $this->Admin_model->get_one("kelas", ["id_kelas" => $id_kelas]);
             $data['peserta'] = [];
-            $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $id_kelas]);
+            $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $id_kelas, "hapus" => 0]);
             foreach ($peserta as $i => $peserta) {
                 $data['peserta'][$i] = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
                 $data['peserta'][$i]['sertifikat'] = $peserta['sertifikat'];

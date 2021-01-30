@@ -4,6 +4,7 @@ class Kelas extends CI_CONTROLLER{
         parent::__construct();
         $this->load->model('Arab_model');
         $this->load->model('Admin_model');
+        $this->load->model('Kelas_model');
         if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
 			redirect(base_url("auth"));
@@ -122,7 +123,7 @@ class Kelas extends CI_CONTROLLER{
             $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id]);
             foreach ($kelas as $i => $kelas) {
                 $data['kelas'][$i] = $kelas;
-                $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas']]));
+                $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas'], "hapus" => 0]));
             }
         // kelas & program
 
@@ -137,7 +138,7 @@ class Kelas extends CI_CONTROLLER{
         $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id]);
         foreach ($kelas as $i => $kelas) {
             $data['kelas'][$i] = $kelas;
-            $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas']]));
+            $data['kelas'][$i]['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas'], "hapus" => 0]));
             $data['kelas'][$i]['pertemuan'] = COUNT($this->Admin_model->get_all("materi_kelas", ["id_kelas" => $kelas['id_kelas']]));
             $link = strtolower(str_replace(" ", "", $data['kelas'][$i]['program']));
             $data['kelas'][$i]['link'] = $link."/kelas/".md5($kelas['id_kelas']);
@@ -152,13 +153,13 @@ class Kelas extends CI_CONTROLLER{
         // $kelas = $this->Admin_model->get_one("kelas", ["MD5(id_kelas)" => $id_kelas]);
         // foreach ($kelas as $i => $kelas) {
             $data['kelas'] = $this->Admin_model->get_one("kelas", ["MD5(id_kelas)" => $id_kelas]);
-            $data['kelas']['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["MD5(id_kelas)" => $id_kelas]));
+            $data['kelas']['peserta'] = COUNT($this->Admin_model->get_all("kelas_user", ["MD5(id_kelas)" => $id_kelas, "hapus" => 0]));
             $data['kelas']['pertemuan'] = $this->Admin_model->get_all("materi_kelas", ["MD5(id_kelas)" => $id_kelas], "id");
             $data['kelas']['link'] = $id_kelas;
             $data['faq'] = $this->Admin_model->get_all("faq", ["program" => $data['kelas']['program']]);
 
             $data['peserta'] = [];
-            $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas]);
+            $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas, "hapus" => 0]);
             foreach ($peserta as $i => $peserta) {
                 $detail = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
                 $data['peserta'][$i] = $detail;
@@ -184,7 +185,7 @@ class Kelas extends CI_CONTROLLER{
 
     public function ajax_detail(){
         $id_kelas = $this->input->post('id_kelas');
-        $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas]);
+        $peserta = $this->Admin_model->get_all("kelas_user", ["md5(id_kelas)" => $id_kelas, "hapus" => 0]);
         foreach ($peserta as $i => $peserta) {
             $data['peserta'][$i] = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
         }
@@ -240,12 +241,13 @@ class Kelas extends CI_CONTROLLER{
 
             $data['kelas'] = $this->Admin_model->get_one("kelas", ["id_kelas" => $id_kelas]);
             $data['peserta'] = [];
-            $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $id_kelas]);
+            $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $id_kelas, "hapus" => 0]);
             foreach ($peserta as $i => $peserta) {
                 $data['peserta'][$i] = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
                 $data['peserta'][$i]['sertifikat'] = $peserta['sertifikat'];
                 $data['peserta'][$i]['id_sertifikat'] = $peserta['id'];
-                $data['peserta'][$i]['nilai'] = $this->nilai_sertifikat($id_kelas, $peserta['id_user']);
+                // $data['peserta'][$i]['nilai'] = $this->nilai_sertifikat($id_kelas, $peserta['id_user']);
+                $data['peserta'][$i]['nilai'] = $peserta['nilai'];
             }
 
             usort($data['peserta'], function($a, $b) {
@@ -439,6 +441,10 @@ class Kelas extends CI_CONTROLLER{
             echo json_encode($data['id_kelas']);
         }
 
+        public function add_nilai_sertifikat(){
+            $data = $this->Kelas_model->add_nilai_sertifikat();
+            echo json_encode($data);
+        }
     // add 
 
     // delete 

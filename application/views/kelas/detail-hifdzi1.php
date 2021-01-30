@@ -29,7 +29,7 @@
                         <option value="Ujian Pekan 2">Ujian Lisan Pekan 2</option>
                         <option value="Ujian Pertengahan">Ujian Pertengahan</option>
                         <option value="Ujian Pekan 3">Ujian Lisan Pekan 3</option>
-                        <option value="Ujian Pekan 4">Ujian Lisan Pekan 4</option>
+                        <!-- <option value="Ujian Pekan 4">Ujian Lisan Pekan 4</option> -->
                         <option value="Ujian Akhir">Ujian Akhir Video</option>
                     </select>
                 </div>
@@ -346,10 +346,10 @@
                                     <span>Ujian Form Pekan 4</span>
                                     <span id="nilai-pekan-4">0</span>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between">
+                                <!-- <li class="list-group-item d-flex justify-content-between">
                                     <span>Ujian Lisan Pekan 4</span>
                                     <span id="nilai-pekan-4-lisan">0</span>
-                                </li>
+                                </li> -->
                                 <li class="list-group-item d-flex justify-content-between">
                                     <span>Ujian Akhir Form</span>
                                     <span id="nilai-akhir-form">0</span>
@@ -1019,6 +1019,7 @@
                                         <div class="">
                                             <a href="#modalSertifikat" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-primary sertifikat"><i class="fa fa-award"></i></a>
                                             <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-success detail"><i class="fa fa-book"></i></a>
+                                            <a target="_blank" href="<?= base_url()?>hifdzi1/rekap_nilai/`+data.kelas.link+`" class="btn btn-sm btn-info"><i class="fa fa-download text-light"></i></a>
                                         </div>
                                         <span>
                                             <a href="javascript:void(0)" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
@@ -1041,8 +1042,8 @@
 
                     html += `</select></div>
                             <div class="col-12 mb-4 d-flex justify-content-center">
-                                <a class="btn btn-sm btn-outline-info text-light mr-2" id="btnAbsen">Presensi</a>
-                                <a class="btn btn-sm btn-outline-info text-light" id="btnLatihan">Latihan</a>
+                                <a class="btn btn-sm btn-secondary text-light mr-2" id="btnAbsen">Presensi</a>
+                                <a class="btn btn-sm btn-secondary text-light" id="btnLatihan">Latihan</a>
                             </div>`;
 
                     $("#dataPertemuan").html(html);
@@ -1092,31 +1093,103 @@
                     let sertifikat = "";
                     let button = "";
 
-                    data.peserta.forEach(peserta => {
-                        if(peserta.sertifikat == "0"){
+                    // data.peserta.forEach(peserta => {
+                    //     if(peserta.sertifikat == "0"){
+                    //         sertifikat = "onSertifikat";
+                    //         button = "btn-outline-warning";
+                    //     } else {
+                    //         sertifikat = "offSertifikat";
+                    //         button = "btn-warning";
+                    //     }
+
+                    //     html += `
+                    //         <li class="list-group-item d-flex justify-content-between">
+                    //             <span>
+                    //                 `+peserta.nama+`<br><span class="btn btn-sm btn-outline-dark">`+peserta.nilai+`</span>
+                    //             </span>
+                    //             <span>
+                    //                 <a href="javascript:void(0)" class="btn btn-sm `+button+`" id="`+sertifikat+`" data-id="`+peserta.id_sertifikat+`"><i class="fa fa-award"></i></a>
+                    //             </span>
+                    //         </li>
+                    //     `;
+                    // });
+                    data.peserta.forEach((element, i) => {
+                        // console.log(element)
+                        if(element.sertifikat == "0"){
                             sertifikat = "onSertifikat";
                             button = "btn-outline-warning";
                         } else {
                             sertifikat = "offSertifikat";
                             button = "btn-warning";
                         }
+                        
+                        if(data.status == "aktif") btnDelete = `<a href="javascript:void(0)" id="keluar_kelas" class="mr-1" data-id="`+element.id_sertifikat+`|`+element.nama+`|`+data.nama_kelas+`"><i class="fa fa-minus-circle text-danger"></i></a>`
+                        else btnDelete = "";
 
-                        html += `
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>
-                                    `+peserta.nama+`<br><span class="btn btn-sm btn-outline-dark">`+peserta.nilai+`</span>
-                                </span>
-                                <span>
-                                    <a href="javascript:void(0)" class="btn btn-sm `+button+`" id="`+sertifikat+`" data-id="`+peserta.id_sertifikat+`"><i class="fa fa-award"></i></a>
-                                </span>
-                            </li>
-                        `;
+                        if(element.nilai == "") nilai = `<small class="form-text text-danger">nilai belum diinputkan</small>`
+                        else nilai = ``
+                        
+                        mumtaz = "";
+                        jj = "";
+                        jayyid = "";
+                        maqbul = "";
+
+                        if(element.nilai == "ممتاز"){ mumtaz = "selected" }else {mumtaz = ""}
+                        if(element.nilai == "جيد جدا"){ jj = "selected" }else {jj = ""}
+                        if(element.nilai == "جيد"){ jayyid = "selected" }else {jayyid = ""}
+                        if(element.nilai == "مقبول"){ maqbul = "selected" }else {maqbul = ""}
+
+                        html += `<li class="list-group-item">
+                                    <span>
+                                        `+btnDelete+`
+                                        `+element.nama+`<br>
+                                    </span>
+                                    <div class="form-group mt-1">
+                                        <select name="nilai" id="nilai`+element.id_sertifikat+`" class="form-control form-control-sm mr-1">
+                                            <option value="">Nilai</option>
+                                            <option `+mumtaz+` value="ممتاز">ممتاز</option>
+                                            <option `+jj+` value="جيد جدا">جيد جدا</option>
+                                            <option `+jayyid+` value="جيد">جيد</option>
+                                            <option `+maqbul+` value="مقبول">مقبول</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span id="msg-`+element.id_sertifikat+`">`+nilai+`</span>
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-primary" id="btnSaveNilai" data-id="`+element.id_sertifikat+`">simpan</a>
+                                    </div>
+                                </li>`;
                     });
+                                    // <span>
+                                    //     <a href="javascript:void(0)" class="btn btn-sm `+button+`" id="`+sertifikat+`" data-id="`+element.id_sertifikat+`"><i class="fa fa-award"></i></a>
+                                    // </span>
+                                        // <a href="<?= base_url()?>kelas/syahadah/`+element.link+`" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-award"></i></a>
 
                     $("#list-sertifikat").html(html)
                 }
             })
         }
+
+        $("#list-sertifikat").on("click", "#btnSaveNilai", function(){
+            let id = $(this).data("id");
+            let nilai = $("#nilai"+id).val();
+            
+            // console.log(id);
+            // console.log(nilai);
+            $.ajax({
+                url: "<?= base_url()?>kelas/add_nilai_sertifikat",
+                method: "POST",
+                dataType: "JSON",
+                data: {id:id, nilai:nilai},
+                success: function(result){
+                    delete_msg();
+                    if(result == 1){
+                        $("#msg-"+id).html(`<small class="form-text text-success msg-nilai">berhasil menginputkan nilai</small>`)
+                    } else {
+                        $("#msg-"+id).html(`<small class="form-text text-danger msg-nilai">nilai belum diinputkan</small>`)
+                    }
+                }
+            })
+        })
 
         function reload_peserta(){
             $.ajax({
@@ -1165,7 +1238,7 @@
                     let html = "";
                     let check = "";
 
-                    for (let i = 1; i < 26; i++) {
+                    for (let i = 1; i < 25; i++) {
                         if(pert.includes("Pertemuan "+i)){
                             html += `<li class="list-group-item">
                                         <div class="d-flex justify-content-between">
@@ -1350,7 +1423,7 @@
                     $("#nilai-pekan-3").html(data.ujian[5]);
                     $("#nilai-pekan-3-lisan").html(data.ujian[6]);
                     $("#nilai-pekan-4").html(data.ujian[7]);
-                    $("#nilai-pekan-4-lisan").html(data.ujian[8]);
+                    // $("#nilai-pekan-4-lisan").html(data.ujian[8]);
                     $("#nilai-akhir-form").html(data.ujian[9]);
                     $("#nilai-akhir-video").html(data.ujian[10]);
                 }
