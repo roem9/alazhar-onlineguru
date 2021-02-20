@@ -559,38 +559,52 @@
     })
 
     $("#dataPeserta").on("click", "#btnSimpanNilai", function(){
-        if(confirm('Yakin akan menyimpan nilai?')){
-            let id = [];
-            let nilai = []
-            let data = []
-            let latihan = $("#input_latihan").val()
-            let pertemuan = $("#input_pertemuan").val();
+        Swal.fire({
+            icon: 'question',
+            text: 'Yakin akan menyimpan nilai?',
+            showCloseButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then(function (result) {
+            if (result.value) {
+                let id = [];
+                let nilai = []
+                let data = []
+                let latihan = $("#input_latihan").val()
+                let pertemuan = $("#input_pertemuan").val();
 
 
-            $('input[name= "id_nilai"]').each(function(i, id_nilai){
-                id[i] = id_nilai.value;
-            });
+                $('input[name= "id_nilai"]').each(function(i, id_nilai){
+                    id[i] = id_nilai.value;
+                });
 
-            $('input[name= "nilai"]').each(function(i, data){
-                nilai[i] = data.value;
-            });
-            
-            for (let i = 0; i < id.length; i++) {
-                data[i] = [id[i], nilai[i]]
-            }
-
-            $.ajax({
-                method: "POST",
-                url: "<?= base_url()?>hifdzi1/input_nilai",
-                dataType: "JSON",
-                data: {id_kelas: "<?= $link?>", latihan: latihan, pertemuan: pertemuan, data: data},
-                success: function(data){
-                    // console.log(data)
-                    $(".msg-input-nilai").html(`<div class="alert alert-success"><i class="fa fa-check-circle text-success"></i> berhasil menginputkan nilai peserta</div>`)
-                    $(".container").scrollTop(0);
+                $('input[name= "nilai"]').each(function(i, data){
+                    nilai[i] = data.value;
+                });
+                
+                for (let i = 0; i < id.length; i++) {
+                    data[i] = [id[i], nilai[i]]
                 }
-            })
-        }
+
+                $.ajax({
+                    method: "POST",
+                    url: "<?= base_url()?>hifdzi1/input_nilai",
+                    dataType: "JSON",
+                    data: {id_kelas: "<?= $link?>", latihan: latihan, pertemuan: pertemuan, data: data},
+                    success: function(data){
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            text: 'berhasil menginputkan nilai',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $(".container").scrollTop(0);
+                    }
+                })
+            }
+        })
     })
     
     // detail peserta 
@@ -782,8 +796,15 @@
                 url : "<?= base_url()?>kelas/add_pertemuan",
                 dataType : "JSON",
                 data : {pertemuan:data[0], id_kelas:data[1]},
-                success : function(data){
-                    detail(data);
+                success : function(result){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'berhasil mengaktifkan '+data[0],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    detail(result);
                     reload_data();
                 }
             })
@@ -792,18 +813,35 @@
         $('#formListPertemuan').on('click', '#offPertemuan', function(){
             let data = $(this).data("id");
             data = data.split("|")
-            if(confirm('Yakin akan menghapus '+data[0]+'?')){
-                $.ajax({
-                    type : "POST",
-                    url : "<?= base_url()?>kelas/delete_pertemuan",
-                    dataType : "JSON",
-                    data : {pertemuan:data[0], id_kelas:data[1]},
-                    success : function(data){
-                        detail(data);
-                        reload_data();
-                    }
-                })
-            }
+
+            Swal.fire({
+                icon: 'question',
+                text: 'Yakin akan menonaktifkan '+data[0]+'?',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        type : "POST",
+                        url : "<?= base_url()?>kelas/delete_pertemuan",
+                        dataType : "JSON",
+                        data : {pertemuan:data[0], id_kelas:data[1]},
+                        success : function(result){
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                text: 'berhasil menonaktifkan '+data[0],
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            detail(result);
+                            reload_data();
+                        }
+                    })
+                }
+            })
         });
     // pertemuan 
     
@@ -816,8 +854,15 @@
                 url : "<?= base_url()?>kelas/add_ujian",
                 dataType : "JSON",
                 data : {pertemuan:data[0], id_kelas:data[1]},
-                success : function(data){
-                    detail(data);
+                success : function(result){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'berhasil mengaktifkan '+data[0],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    detail(result);
                     reload_data();
                 }
             })
@@ -826,18 +871,35 @@
         $('#formListUjian').on('click', '#offPertemuan', function(){
             let data = $(this).data("id");
             data = data.split("|")
-            if(confirm('Yakin akan menghapus '+data[0]+'?')){
-                $.ajax({
-                    type : "POST",
-                    url : "<?= base_url()?>kelas/delete_ujian",
-                    dataType : "JSON",
-                    data : {pertemuan:data[0], id_kelas:data[1]},
-                    success : function(data){
-                        detail(data);
-                        reload_data();
-                    }
-                })
-            }
+            
+            Swal.fire({
+                icon: 'question',
+                text: 'Yakin akan menonaktifkan '+data[0]+'?',
+                showCloseButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak'
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        type : "POST",
+                        url : "<?= base_url()?>kelas/delete_ujian",
+                        dataType : "JSON",
+                        data : {pertemuan:data[0], id_kelas:data[1]},
+                        success : function(result){
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                text: 'berhasil menonaktifkan '+data[0],
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            detail(result);
+                            reload_data();
+                        }
+                    })
+                }
+            })
         });
     // ujian 
     
@@ -850,8 +912,15 @@
                 url : "<?= base_url()?>kelas/on_absen",
                 dataType : "JSON",
                 data : {pertemuan:data[0], id_kelas:data[1]},
-                success : function(data){
-                    detail(data);
+                success : function(result){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'berhasil mengaktifkan presensi '+data[0],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    detail(result);
                     reload_data();
                 }
             })
@@ -865,8 +934,15 @@
                 url : "<?= base_url()?>kelas/off_absen",
                 dataType : "JSON",
                 data : {pertemuan:data[0], id_kelas:data[1]},
-                success : function(data){
-                    detail(data);
+                success : function(result){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'berhasil menonaktifkan presensi '+data[0],
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    detail(result);
                     reload_data();
                 }
             })
@@ -1187,9 +1263,23 @@
                 success: function(result){
                     delete_msg();
                     if(result == 1){
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            text: 'berhasil menginputkan nilai',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                         $("#msg-"+id).html(`<small class="form-text text-success msg-nilai">berhasil menginputkan nilai</small>`)
                     } else {
                         $("#msg-"+id).html(`<small class="form-text text-danger msg-nilai">nilai belum diinputkan</small>`)
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'error',
+                            text: 'nilai belum diinputkan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
                     }
                 }
             })
