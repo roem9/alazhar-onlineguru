@@ -50,10 +50,23 @@ class Admin_model extends CI_MODEL{
             return $this->db->get()->result_array();
         }
         
-        public function get_all_like($table, $col, $like, $where){
+        public function get_all_like($table, $col, $like, $where, $order = "", $urut = "ASC"){
             $this->db->from($table);
             $this->db->like($col, $like);
             if($where) $this->db->where($where);
+            if($order)
+                $this->db->order_by($order, $urut);
+            return $this->db->get()->result_array();
+        }
+
+        public function get_all_where_in($table, $where = "", $where_in = "", $order = "", $urut = "ASC"){
+            $this->db->from($table);
+            if($where)
+                $this->db->where($where);
+            if($where_in)
+                $this->db->where_in($where_in);
+            if($order)
+                $this->db->order_by($order, $urut);
             return $this->db->get()->result_array();
         }
     // get all data

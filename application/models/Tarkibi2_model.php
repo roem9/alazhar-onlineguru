@@ -34,28 +34,29 @@ class Tarkibi2_model extends CI_MODEL{
         $id_kelas = $this->input->post("id_kelas");
         $pertemuan = $this->input->post("pertemuan");
         $text = $this->input->post("text");
-        $id_user = $this->session->userdata('id_user');
+        $id_latihan = $this->input->post("id_latihan");
+        // $id_user = $this->session->userdata('id_user');
 
-        $cek = $this->Admin_model->get_one("latihan_isian_peserta", ["id_kelas" => $id_kelas, "id_user" => $id_user, "pertemuan" => $pertemuan]);
-        if(!$cek){
+        // $cek = $this->Admin_model->get_one("latihan_isian_peserta", ["id_kelas" => $id_kelas, "id_user" => $id_user, "pertemuan" => $pertemuan]);
+        // if(!$cek){
+        //     $data = [
+        //         "id_kelas" => $id_kelas,
+        //         "pertemuan" => $pertemuan,
+        //         "pembahasan" => $text,
+        //         "id_user" => $id_user,
+        //     ];
+            
+        //     $this->Admin_model->add_data("latihan_isian_peserta", $data);
+        // } else {
             $data = [
                 "id_kelas" => $id_kelas,
                 "pertemuan" => $pertemuan,
                 "pembahasan" => $text,
-                "id_user" => $id_user,
+                // "id_user" => $id_user,
             ];
             
-            $this->Admin_model->add_data("latihan_isian_peserta", $data);
-        } else {
-            $data = [
-                "id_kelas" => $id_kelas,
-                "pertemuan" => $pertemuan,
-                "pembahasan" => $text,
-                "id_user" => $id_user,
-            ];
-            
-            $this->Admin_model->edit_data("latihan_isian_peserta", ["id_kelas" => $id_kelas, "id_user" => $id_user, "pertemuan" => $pertemuan], $data);
-        }
+            $this->Admin_model->edit_data("latihan_isian_peserta", ["id" => $id_latihan, "pertemuan" => $pertemuan], $data);
+        // }
 
         return 1;
     }

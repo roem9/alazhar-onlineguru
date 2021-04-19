@@ -21,28 +21,21 @@
             <div class="row" id="dataLatihan"></div>
             <div class="row" id="inputNilai">
                 <div class="col-12">
-                    <select name="input_latihan" id="input_latihan" class="form-control form-control-sm">
+                    <select name="input_latihan" id="input_latihan" class="form-control form-control-md">
                         <option value="">Pilih Input Nilai</option>
-                        <option value="Tambahan">Latihan Tambahan</option>
-                        <option value="Hafalan">Latihan Hafalan</option>
-                        <option value="Ujian Pekan 1">Ujian Lisan Pekan 1</option>
-                        <option value="Ujian Pekan 2">Ujian Lisan Pekan 2</option>
-                        <option value="Ujian Pertengahan">Ujian Pertengahan</option>
-                        <option value="Ujian Pekan 3">Ujian Lisan Pekan 3</option>
-                        <option value="Ujian Pekan 4">Ujian Lisan Pekan 4</option>
-                        <option value="Ujian Akhir">Ujian Akhir Video</option>
-                    </select>
-                </div>
-                <div class="col-12">
-                    <select name="input_pertemuan" id="input_pertemuan" class="form-control form-control-sm">
-                        <option value="">Pilih Pertemuan</option>
-                        <?php for ($i=1; $i < 25; $i++) :?>
-                            <option value="Pertemuan <?= $i?>">Pertemuan <?= $i?></option>
+                        <?php for ($i=1; $i < 21; $i++) :
+                            if($i != 7 && $i != 3 && $i != 6) :
+                        ?>
+                                <option value="1|Pertemuan <?= $i?>">Latihan Pertemuan <?= $i?></option>
+                            <?php endif;?>
+                        <?php endfor;?>
+                        <?php for ($i=1; $i < 5; $i++) :?>
+                            <option value="2|Review <?= $i?>">Review Pekan <?= $i?></option>
                         <?php endfor;?>
                     </select>
                 </div>
                 <div class="col-12 d-flex justify-content-end mt-2 mb-2">
-                    <button class="btn btn-sm btn-success" id="btnInputNilai">Tampilkan Form</button>
+                    <button class="btn btn-md btn-success" id="btnInputNilai">Tampilkan Form</button>
                 </div>
             </div>
             <div class="row">
@@ -97,9 +90,9 @@
                             <li class="nav-item">
                                 <a href="#" class='nav-link' id="btn-form-1"><i class="fas fa-clock"></i></a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a href="#" class='nav-link active' id="btn-form-2"><i class="fas fa-tasks"></i></a>
-                            </li>
+                            </li> -->
                             <!-- <li class="nav-item">
                                 <a href="#" class='nav-link' id="btn-form-2"><i class="fas fa-users"></i></a>
                             </li> -->
@@ -115,19 +108,6 @@
                                 <input type="hidden" name="id_kelas">
                                 <ul class="list-group">
                                     <div id="list-pertemuan"></div>
-                                </ul>
-                            </form>
-                        </div>
-
-                        <div class="card" id="form-2">
-                            <div class="msgListUjian"></div>
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-info">List Ujian</li>
-                            </ul>
-                            <form id="formListUjian">
-                                <input type="hidden" name="id_kelas">
-                                <ul class="list-group">
-                                    <div id="list-ujian"></div>
                                 </ul>
                             </form>
                         </div>
@@ -170,83 +150,6 @@
     </div>
 <!-- modal sertifikat-->
 
-<!-- modal faq-->
-    <div class="modal fade" id="modalFaq" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalFaqTitle"><?= $kelas['nama_kelas']?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="text-info"><b>Form Tambah FAQ</b></h6>
-                    </div>
-                    <div class="card-body cus-font">
-                        <div class="msgFaq"></div>
-                        <form id="formFaq">
-                            <input type="hidden" name="id_kelas" id="id_kelas_add" value="<?= $kelas['id_kelas']?>">
-                            <div class="form-group">
-                                <label for="soal_add">Soal</label>
-                                <textarea name="soal" id="soal_add" class="form-control form-control-sm" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="jawaban_add">Jawaban</label>
-                                <textarea name="jawaban" id="jawaban_add" class="form-control form-control-sm" required></textarea>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-primary" id="btnAddFaq">Tambah FAQ</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-<!-- modal faq-->
-
-<!-- modal faq-->
-    <div class="modal fade" id="modalEditFaq" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalEditFaqTitle">Edit FAQ</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="text-info"><b>Form Edit FAQ</b></h6>
-                    </div>
-                    <div class="card-body cus-font">
-                        <div class="msgFaqEdit"></div>
-                        <input type="hidden" name="id_faq" id="id_faq_edit">
-                        <div class="form-group">
-                            <label for="soal_edit">Soal</label>
-                            <textarea name="soal" id="soal_edit" class="form-control form-control-sm" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="jawaban_edit">Jawaban</label>
-                            <textarea name="jawaban" id="jawaban_edit" class="form-control form-control-sm" required></textarea>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-sm btn-danger mr-1" id="btnDeleteFaq">Delete</button>
-                            <button type="button" class="btn btn-sm btn-success" id="btnEditFaq">Ubah</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-<!-- modal faq-->
-
 <!-- modal detail peserta -->
     <div class="modal fade" id="modalDetailPeserta" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -286,75 +189,32 @@
                         </div>
 
                         <div id="form-2-2">
-                            <div class="row">
-                                <div class="col-12">
-                                    <select name="jenis_nilai" id="jenis_nilai" class="form-control form-control-sm mb-2">
-                                        <option value="Harian">Tugas Harian</option>
-                                        <!-- <option value="Tambahan">Tugas Harian Tambahan</option>
-                                        <option value="Hafalan">Tugas Harian Hafalan</option> -->
-                                    </select>
-                                </div>
-                            </div>
                             <ul class="list-group">
                                 <li class="list-group-item list-group-item-info titleNilai">Nilai Tugas Harian</li>
                             </ul>
                             <ul class="list-group">
                                 <div id="list-tugas-harian"></div>
                             </ul>
-                            <ul class="list-group">
-                                <div id="list-tugas-tambahan"></div>
-                            </ul>
-                            <ul class="list-group">
-                                <div id="list-tugas-hafalan"></div>
-                            </ul>
                         </div>
 
                         <div class="card" id="form-2-3">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-info">Nilai Ujian</li>
+                                <li class="list-group-item list-group-item-info">Nilai Tugas Review</li>
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Form Pekan 1</span>
-                                    <span id="nilai-pekan-1">0</span>
+                                    <span>Review Pekan 1</span>
+                                    <span id="nilai-review-1"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Lisan Pekan 1</span>
-                                    <span id="nilai-pekan-1-lisan">0</span>
+                                    <span>Review Pekan 2</span>
+                                    <span id="nilai-review-2"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Form Pekan 2</span>
-                                    <span id="nilai-pekan-2">0</span>
+                                    <span>Review Pekan 3</span>
+                                    <span id="nilai-review-3"></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Lisan Pekan 2</span>
-                                    <span id="nilai-pekan-2-lisan">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Pertengahan</span>
-                                    <span id="nilai-pertengahan">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Form Pekan 3</span>
-                                    <span id="nilai-pekan-3">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Lisan Pekan 3</span>
-                                    <span id="nilai-pekan-3-lisan">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Form Pekan 4</span>
-                                    <span id="nilai-pekan-4">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Lisan Pekan 4</span>
-                                    <span id="nilai-pekan-4-lisan">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Akhir Form</span>
-                                    <span id="nilai-akhir-form">0</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Ujian Akhir Video</span>
-                                    <span id="nilai-akhir-video">0</span>
+                                    <span>Review Pekan 4</span>
+                                    <span id="nilai-review-4"></span>
                                 </li>
                             </ul>
                         </div>
@@ -385,30 +245,10 @@
         $("#dataPeserta").hide();
         $("#titleForm").hide()
 
-        if(latihan == ""){
-            $("#input_pertemuan").hide();
-            $("#btnInputNilai").hide();
-        } else if(latihan == "Tambahan" || latihan == "Hafalan"){
-            $("#input_pertemuan").show();
-            $("#btnInputNilai").hide();
-        } else if(latihan != "Tambahan" || latihan != "Hafalan"){
+        if(latihan != "Tambahan" || latihan != "Hafalan"){
             $("#btnInputNilai").show();
             $("#input_pertemuan").hide();
-            $("#input_pertemuan").val("");
         }        
-    })
-    
-    $("#input_pertemuan").change(function(){
-        let latihan = $("#input_latihan").val();
-        let pertemuan = $("#input_pertemuan").val();
-        $("#dataPeserta").hide();
-        $("#titleForm").hide()
-
-        if(pertemuan != ""){
-            $("#btnInputNilai").show();
-        } else {
-            $("#btnInputNilai").hide();
-        }
     })
 
     $("#dataKelas").on("click", ".inputNilai", function(){
@@ -473,7 +313,7 @@
                             <li class="list-group-item d-flex justify-content-between">
                                 <span>`+list.peserta.nama+`<br><b>`+list.pertemuan+`</b></span>
                                 <span>
-                                    <a href="<?= base_url()?>tarkibi2/koreksi/`+list.link+`" class="btn btn-sm btn-primary">periksa</a>
+                                    <a href="<?= base_url()?>tarkibi2/koreksi/`+list.link+`" class="btn btn-md btn-primary">periksa</a>
                                 </span>
                             </li>`;
                     });
@@ -526,9 +366,9 @@
     })
     
     $("#btnInputNilai").click(function(){
-        let latihan = $("#input_latihan").val()
-        let pertemuan = $("#input_pertemuan").val()
-        
+        delete_msg()
+        let pertemuan = $("#input_latihan").val()
+
         $("#dataPeserta").show()
         // $("#inputNilai").hide();
         // $(".headerForm").hide();
@@ -537,25 +377,25 @@
         
         $.ajax({
             type: "POST",
-            url: "<?= base_url()?>hifdzi1/get_nilai",
+            url: "<?= base_url()?>tarkibi2/get_nilai",
             dataType: "JSON",
-            data: {id_kelas: "<?= $link?>", latihan: latihan, pertemuan: pertemuan},
+            data: {id_kelas: "<?= $link?>", pertemuan: pertemuan},
             success: function(data){
                 html = "";
                 
-                $("#titleForm").html($("#input_latihan option:selected").text()+' '+pertemuan);
+                $("#titleForm").html($("#input_latihan option:selected").text());
                 $("#titleForm").show();
 
                 data.peserta.forEach(peserta => {
                     html += `
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-9">
+                                <input type="hidden" name="id_nilai" value="`+peserta.id_user+`|`+peserta.id_nilai+`">
+                                <div class="col-8">
                                     `+peserta.nama+`
                                 </div>
-                                <div class="col-3">
-                                    <input type="hidden" name="id_nilai" value="`+peserta.id_user+`|`+peserta.id_nilai+`">
-                                    <input type="text" name="nilai" value="`+peserta.nilai+`" class="form-control form-control-sm">
+                                <div class="col-4">
+                                    <input type="text" name="nilai" value="`+peserta.nilai+`" class="form-control form-control-md">
                                 </div>
                             </div>
                         </li>
@@ -564,7 +404,7 @@
 
                 html += `
                     <div class="d-flex justify-content-end">
-                        <button class="btn btn-sm btn-primary mt-2" id="btnSimpanNilai">Simpan Nilai</button>
+                        <button class="btn btn-md btn-primary mt-2" id="btnSimpanNilai">Simpan Nilai</button>
                     </div>
                 `;
 
@@ -578,8 +418,7 @@
             let id = [];
             let nilai = []
             let data = []
-            let latihan = $("#input_latihan").val()
-            let pertemuan = $("#input_pertemuan").val();
+            let pertemuan = $("#input_latihan").val()
 
 
             $('input[name= "id_nilai"]').each(function(i, id_nilai){
@@ -596,10 +435,10 @@
 
             $.ajax({
                 method: "POST",
-                url: "<?= base_url()?>hifdzi1/input_nilai",
+                url: "<?= base_url()?>tarkibi2/input_nilai",
                 dataType: "JSON",
-                data: {id_kelas: "<?= $link?>", latihan: latihan, pertemuan: pertemuan, data: data},
-                success: function(data){
+                data: {id_kelas: "<?= $link?>", pertemuan: pertemuan, data: data},
+                success: function(datas){
                     // console.log(data)
                     $(".msg-input-nilai").html(`<div class="alert alert-success"><i class="fa fa-check-circle text-success"></i> berhasil menginputkan nilai peserta</div>`)
                     $(".container").scrollTop(0);
@@ -616,33 +455,13 @@
             detail_peserta(id)
             btn_21();
             // nilai
-                $("#jenis_nilai").val("Harian")
-                $(".titleNilai").html("Nilai Tugas Harian");
-                $("#list-tugas-harian").show();
-                $("#list-tugas-tambahan").hide();
-                $("#list-tugas-hafalan").hide();
+                // $("#jenis_nilai").val("Harian")
+                // $(".titleNilai").html("Nilai Tugas Harian");
+                // $("#list-tugas-harian").show();
+                // $("#list-tugas-tambahan").hide();
+                // $("#list-tugas-hafalan").hide();
             // nilai
             // delete_msg();
-        })
-
-        $("#jenis_nilai").change(function(){
-            let data = $(this).val();
-            if(data == "Harian"){
-                $(".titleNilai").html("Nilai Tugas Harian");
-                $("#list-tugas-harian").show();
-                $("#list-tugas-tambahan").hide();
-                $("#list-tugas-hafalan").hide();
-            } else if(data == "Tambahan"){
-                $(".titleNilai").html("Nilai Tugas Tambahan");
-                $("#list-tugas-harian").hide();
-                $("#list-tugas-tambahan").show();
-                $("#list-tugas-hafalan").hide();
-            } else if(data == "Hafalan"){
-                $(".titleNilai").html("Nilai Tugas Hafalan");
-                $("#list-tugas-harian").hide();
-                $("#list-tugas-tambahan").hide();
-                $("#list-tugas-hafalan").show();
-            }
         })
     // detail peserta 
 
@@ -756,6 +575,42 @@
         const id = $(this).data('id');
         // delete_msg();
         sertifikat(id);
+    })
+
+    $("#list-sertifikat").on("click", "#btnSaveNilai", function(){
+        let id = $(this).data("id");
+        let nilai = $("#nilai"+id).val();
+        
+        // console.log(id);
+        // console.log(nilai);
+        $.ajax({
+            url: "<?= base_url()?>kelas/add_nilai_sertifikat",
+            method: "POST",
+            dataType: "JSON",
+            data: {id:id, nilai:nilai},
+            success: function(result){
+                delete_msg();
+                if(result == 1){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        text: 'berhasil menginputkan nilai',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    $("#msg-"+id).html(`<small class="form-text text-success msg-nilai">berhasil menginputkan nilai</small>`)
+                } else {
+                    $("#msg-"+id).html(`<small class="form-text text-danger msg-nilai">nilai belum diinputkan</small>`)
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        text: 'nilai belum diinputkan',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            }
+        })
     })
 
     // sertifikat 
@@ -917,7 +772,7 @@
                 let pertemuan = $(this).val();
                 $.ajax({
                     type : "POST",
-                    url : "<?= base_url()?>hifdzi1/ajax_pertemuan",
+                    url : "<?= base_url()?>tarkibi2/ajax_pertemuan",
                     dataType : "JSON",
                     data : {id_kelas:"<?= $link?>", pertemuan:pertemuan},
                     success : function(data){
@@ -929,7 +784,7 @@
                                 html += `<ul class="list-group">
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span>`+absen.nama+`</span>
-                                                <span><a href="`+absen.pesan+`" target="_blank" class="btn btn-sm btn-outline-success"><i class="fa fa-phone"></i></a></span>
+                                                <span><a href="`+absen.pesan+`" target="_blank" class="btn btn-md btn-outline-success"><i class="fa fa-phone"></i></a></span>
                                             </li>
                                         </ul>`;
                             });
@@ -947,7 +802,7 @@
                                 html += `<ul class="list-group">
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <span>`+latihan.nama+`</span>
-                                                <span><a href="`+latihan.pesan+`" target="_blank" class="btn btn-sm btn-outline-success"><i class="fa fa-phone"></i></a></span>
+                                                <span><a href="`+latihan.pesan+`" target="_blank" class="btn btn-md btn-outline-success"><i class="fa fa-phone"></i></a></span>
                                             </li>
                                         </ul>`;
                             });
@@ -1027,28 +882,35 @@
                                         <div class="">
                                             <i class="fa fa-users mr-2"></i>`+data.kelas.peserta+` Orang
                                         </div>
-                                        <a href="#" class="btn btn-sm btn-warning text-light" id="btnDataPeserta"><i class="fa fa-users"></i></a>
+                                        <a href="#" class="btn btn-sm list-group-item-primary" id="btnDataPeserta"><i class="fa fa-users"></i></a>
                                     </li>
                                     <li class="list-group-item"><i class="fa fa-book mr-2"></i>Pertemuan `+data.kelas.pertemuan.length+`</li>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <div class="">
-                                            <a href="#modalSertifikat" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-primary sertifikat"><i class="fa fa-award"></i></a>
-                                            <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-success detail"><i class="fa fa-book"></i></a>
+                                            <a href="#modalSertifikat" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md list-group-item-primary sertifikat"><i class="fa fa-award"></i></a>
+                                            <a href="#modalDetail" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md list-group-item-success detail"><i class="fa fa-book"></i></a>
                                         </div>
                                         <span>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
-                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-secondary inputNilai">input nilai</a>
-                                            <a href="<?= base_url()?>tarkibi2/list_koreksi/`+data.kelas.link+`" class="btn btn-sm btn-warning">latihan</a>
+                                            <a target="_blank" href="<?= base_url()?>tarkibi2/rekap_nilai/`+data.kelas.link+`" class="btn btn-md btn-success"><i class="fa fa-download"></i></a>
+                                        </span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>
+                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md btn-secondary notifikasi"><i class="fa fa-comment"></i></a>
+                                            <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md btn-secondary inputNilai">input nilai</a>
+                                        </span>
+                                        <span>
+                                            <a href="<?= base_url()?>tarkibi2/tugas/`+data.kelas.link+`" class="btn btn-md list-group-item-danger">tugas</a>
                                         </span>
                                     </li>
                                 </ul>
                             </div>`;
-                                            // <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-sm btn-outline-info faq">FAQ</a>
+                                            // <a href="#" data-id="`+data.kelas.id_kelas+`" data-toggle="modal" class="btn btn-md btn-outline-info faq">FAQ</a>
                     $("#dataKelas").html(html);
 
 
                     html = `<div class="col-12 mb-2">
-                            <select name="pertemuan" id="rekapPertemuan" class="form-control form-control-sm">
+                            <select name="pertemuan" id="rekapPertemuan" class="form-control form-control-md">
                                 <option value="">Pilih Pertemuan</option>`;
                             
                     data.kelas.pertemuan.forEach(pertemuan => {
@@ -1057,8 +919,8 @@
 
                     html += `</select></div>
                             <div class="col-12 mb-4 d-flex justify-content-center">
-                                <a class="btn btn-sm btn-outline-info text-light mr-2" id="btnAbsen">Presensi</a>
-                                <a class="btn btn-sm btn-outline-info text-light" id="btnLatihan">Latihan</a>
+                                <a class="btn btn-md btn-outline-info text-light mr-2" id="btnAbsen">Presensi</a>
+                                <a class="btn btn-md btn-outline-info text-light" id="btnLatihan">Latihan</a>
                             </div>`;
 
                     $("#dataPertemuan").html(html);
@@ -1070,7 +932,7 @@
                                         `+faq.soal+`
                                     </span>
                                     <span>
-                                        <a href="#modalEditFaq" data-toggle="modal" data-id="`+faq.id+`" class="btn btn-sm btn-success editFaq"><i class="fa fa-edit"></i></a>
+                                        <a href="#modalEditFaq" data-toggle="modal" data-id="`+faq.id+`" class="btn btn-md btn-success editFaq"><i class="fa fa-edit"></i></a>
                                     </span>
                                 </li>`
                     });
@@ -1108,25 +970,72 @@
                     let sertifikat = "";
                     let button = "";
 
-                    data.peserta.forEach(peserta => {
-                        if(peserta.sertifikat == "0"){
+                    // data.peserta.forEach(peserta => {
+                    //     if(peserta.sertifikat == "0"){
+                    //         sertifikat = "onSertifikat";
+                    //         button = "btn-outline-warning";
+                    //     } else {
+                    //         sertifikat = "offSertifikat";
+                    //         button = "btn-warning";
+                    //     }
+
+                    //     html += `
+                    //         <li class="list-group-item d-flex justify-content-between">
+                    //             <span>
+                    //                 `+peserta.nama+`<br><span class="btn btn-md btn-outline-dark">`+peserta.nilai+`</span>
+                    //             </span>
+                    //             <span>
+                    //                 <a href="#" class="btn btn-md `+button+`" id="`+sertifikat+`" data-id="`+peserta.id_sertifikat+`"><i class="fa fa-award"></i></a>
+                    //             </span>
+                    //         </li>
+                    //     `;
+                    // });
+
+                    data.peserta.forEach((element, i) => {
+                        // console.log(element)
+                        if(element.sertifikat == "0"){
                             sertifikat = "onSertifikat";
                             button = "btn-outline-warning";
                         } else {
                             sertifikat = "offSertifikat";
                             button = "btn-warning";
                         }
+                        
+                        if(data.status == "aktif") btnDelete = `<a href="javascript:void(0)" id="keluar_kelas" class="mr-1" data-id="`+element.id_sertifikat+`|`+element.nama+`|`+data.nama_kelas+`"><i class="fa fa-minus-circle text-danger"></i></a>`
+                        else btnDelete = "";
 
-                        html += `
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>
-                                    `+peserta.nama+`<br><span class="btn btn-sm btn-outline-dark">`+peserta.nilai+`</span>
-                                </span>
-                                <span>
-                                    <a href="#" class="btn btn-sm `+button+`" id="`+sertifikat+`" data-id="`+peserta.id_sertifikat+`"><i class="fa fa-award"></i></a>
-                                </span>
-                            </li>
-                        `;
+                        if(element.nilai == "") nilai = `<small class="form-text text-danger">nilai belum diinputkan</small>`
+                        else nilai = ``
+                        
+                        mumtaz = "";
+                        jj = "";
+                        jayyid = "";
+                        maqbul = "";
+
+                        if(element.nilai == "ممتاز"){ mumtaz = "selected" }else {mumtaz = ""}
+                        if(element.nilai == "جيد جدا"){ jj = "selected" }else {jj = ""}
+                        if(element.nilai == "جيد"){ jayyid = "selected" }else {jayyid = ""}
+                        if(element.nilai == "مقبول"){ maqbul = "selected" }else {maqbul = ""}
+
+                        html += `<li class="list-group-item">
+                                    <span>
+                                        `+btnDelete+`
+                                        `+element.nama+`<br>
+                                    </span>
+                                    <div class="form-group mt-1">
+                                        <select name="nilai" id="nilai`+element.id_sertifikat+`" class="form-control form-control-md mr-1">
+                                            <option value="">Nilai</option>
+                                            <option `+mumtaz+` value="ممتاز">ممتاز</option>
+                                            <option `+jj+` value="جيد جدا">جيد جدا</option>
+                                            <option `+jayyid+` value="جيد">جيد</option>
+                                            <option `+maqbul+` value="مقبول">مقبول</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span id="msg-`+element.id_sertifikat+`">`+nilai+`</span>
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-primary" id="btnSaveNilai" data-id="`+element.id_sertifikat+`">simpan</a>
+                                    </div>
+                                </li>`;
                     });
 
                     $("#list-sertifikat").html(html)
@@ -1180,18 +1089,18 @@
 
                     let html = "";
                     let check = "";
-
-                    for (let i = 1; i < 26; i++) {
+// review 1 - 4 
+                    for (let i = 1; i < 21; i++) {
                         if(pert.includes("Pertemuan "+i)){
                             html += `<li class="list-group-item">
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Pertemuan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-primary mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>`;
+                                                <a href="#" class="btn btn-md btn-primary mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>`;
                             if(absen.includes("Pertemuan "+i)){
-                                html += `<a href="#" class="btn btn-sm btn-primary" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offAbsen"><i class="fa fa-user-check"></i></a>`;
+                                html += `<a href="#" class="btn btn-md btn-primary" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="offAbsen"><i class="fa fa-user-check"></i></a>`;
                             } else {
-                                html += `<a href="#" class="btn btn-sm btn-outline-info" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onAbsen"><i class="fa fa-user-check"></i></a>`;
+                                html += `<a href="#" class="btn btn-md btn-outline-info" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onAbsen"><i class="fa fa-user-check"></i></a>`;
                             }
                             
                             html += `
@@ -1203,7 +1112,7 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Pertemuan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-outline-info mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
+                                                <a href="#" class="btn btn-md btn-outline-info mr-2" data-id="Pertemuan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
                                             </div>
                                         </div>
                                     </li>`;
@@ -1227,7 +1136,7 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Ujian Pekan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-primary mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
+                                                <a href="#" class="btn btn-md btn-primary mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
                                             </div>
                                         </div>
                                     </li>`;
@@ -1236,7 +1145,7 @@
                                         <div class="d-flex justify-content-between">
                                             <label for="per`+i+`">Ujian Pekan `+i+`</label>
                                             <div class="">
-                                                <a href="#" class="btn btn-sm btn-outline-info mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
+                                                <a href="#" class="btn btn-md btn-outline-info mr-2" data-id="Ujian Pekan `+i+`|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
                                             </div>
                                         </div>
                                     </li>`;
@@ -1248,7 +1157,7 @@
                                     <div class="d-flex justify-content-between">
                                         <label for="per">Ujian Akhir</label>
                                         <div class="">
-                                            <a href="#" class="btn btn-sm btn-primary mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
+                                            <a href="#" class="btn btn-md btn-primary mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="offPertemuan"><i class="fa fa-book"></i></a>
                                         </div>
                                     </div>
                                 </li>`;
@@ -1257,7 +1166,7 @@
                                     <div class="d-flex justify-content-between">
                                         <label for="per">Ujian Akhir</label>
                                         <div class="">
-                                            <a href="#" class="btn btn-sm btn-outline-info mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
+                                            <a href="#" class="btn btn-md btn-outline-info mr-2" data-id="Ujian Akhir|`+data.id_kelas+`" id="onPertemuan"><i class="fa fa-book"></i></a>
                                         </div>
                                     </div>
                                 </li>`;
@@ -1270,7 +1179,7 @@
 
         function detail_peserta(id){
             $.ajax({
-                url : "<?=base_url()?>hifdzi1/get_detail_peserta",
+                url : "<?=base_url()?>tarkibi2/get_detail_peserta",
                 method : "POST",
                 data : {id_kelas: "<?= $kelas['id_kelas']?>", id : id},
                 async : true,
@@ -1333,42 +1242,11 @@
                     });
                     
                     $("#list-tugas-harian").html(html);
-                    
-                    html = "";
-                    data.nilai_tambahan.forEach((nilai, i) => {
-                        html += `<li class="list-group-item">
-                                    <div class="d-flex justify-content-between">
-                                        <label for="per`+i+`">`+nilai.pertemuan+`</label>
-                                        <span>`+nilai.nilai+`</span>
-                                    </div>
-                                </li>`;
-                    });
-                    
-                    $("#list-tugas-tambahan").html(html);
-                    
-                    html = "";
-                    data.nilai_hafalan.forEach((nilai, i) => {
-                        html += `<li class="list-group-item">
-                                    <div class="d-flex justify-content-between">
-                                        <label for="per`+i+`">`+nilai.pertemuan+`</label>
-                                        <span>`+nilai.nilai+`</span>
-                                    </div>
-                                </li>`;
-                    });
-                    
-                    $("#list-tugas-hafalan").html(html);
 
-                    $("#nilai-pekan-1").html(data.ujian[0]);
-                    $("#nilai-pekan-1-lisan").html(data.ujian[1]);
-                    $("#nilai-pekan-2").html(data.ujian[2]);
-                    $("#nilai-pekan-2-lisan").html(data.ujian[3]);
-                    $("#nilai-pertengahan").html(data.ujian[4]);
-                    $("#nilai-pekan-3").html(data.ujian[5]);
-                    $("#nilai-pekan-3-lisan").html(data.ujian[6]);
-                    $("#nilai-pekan-4").html(data.ujian[7]);
-                    $("#nilai-pekan-4-lisan").html(data.ujian[8]);
-                    $("#nilai-akhir-form").html(data.ujian[9]);
-                    $("#nilai-akhir-video").html(data.ujian[10]);
+                    $("#nilai-review-1").html(data.review[0]);
+                    $("#nilai-review-2").html(data.review[1]);
+                    $("#nilai-review-3").html(data.review[2]);
+                    $("#nilai-review-4").html(data.review[3]);
                 }
                 
             })
