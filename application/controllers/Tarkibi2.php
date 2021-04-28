@@ -845,10 +845,10 @@ class Tarkibi2 extends CI_CONTROLLER{
         $data['kelas'] = $kelas;
 
         
-        $filename = "Rekap Nilai Kelas " . $kelas['nama_kelas'];
+        // $filename = "Rekap Nilai Kelas " . $kelas['nama_kelas'];
 
-        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
+        // header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        // header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
 
         $peserta = $this->Admin_model->get_all("kelas_user", ["id_kelas" => $kelas['id_kelas'], "hapus" => 0]);
         $data['peserta'] = [];
