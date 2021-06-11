@@ -23,6 +23,11 @@
                 <?php 
                     $data_soal = [
                         [
+                            "no" => 0,
+                            "soal" => "",
+                            "jawaban" => ""
+                        ],
+                        [
                             "no" => "1",
                             "soal" => "Mereka (lk) di dalam kelas",
                             "jawaban" => ""
@@ -83,7 +88,20 @@
                     ?>
                         <ul class="list-group soal" id="soal<?= $i+1?>">
                             <div class="form-group mt-3">
-                                <label for=""><?= $soal['no'].". ".$soal['soal']?></label>
+                                <?php if($i > 0) :?>
+                                    <label for=""><?= $soal['no'].". ".$soal['soal']?></label>
+                                <?php else :?>
+                                    <div class="col-12 p-0">
+                                        <div class="alert alert-info"><i class="fa fa-info-circle text-info"></i> Tentuntuka mana Mubtada’ dan Khobarnya ! Dan tentukan mubtada’ nya berupa apa? Dan khobarnya berupa apa ? dan juga dianalisis seperti contoh!</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <label for="">
+                                            <p>هذا حسن. هو طالب مجتهد فى هذه المدرسة. عنده صديق، اسمه سليم. و هما يذهبان إلى الفصل معا. فى الفصل طلاب و طالبات. هم يدرسون اللغة العربية جيدا. الطلاب يجلسون جانب الطالبات. </p>
+                                            <p>الأستاذ يعلّمهم فى الفصل. و هو يكتب الدرس على السبورة. و جانب السبورة خزانة. فيها كتب كثيرة. الطلاب يستطيعون أن يقرأوها فى الإستراحة. الطلاب و الطالبات يدرسون حتى النهار.</p>
+                                            <p>هم يرجعون إلى بيوتهم بعد صلاة الظهر. حسن أمه أمينة. و أبوه إبراهيم. أبوه تاجر غني فى القرية. وأمها ربة البيت. و حسن يساعدهما كل يوم. و حسن عنده حوض السمك. فيه أسماك كثيرة. جانب الحوض حديقة. فيها شجرتان كبيرتان. حسن يلعب تحت الشجرة.</p>
+                                        </label>
+                                    </div>
+                                <?php endif;?>
                                 <div class="jawaban mb-3"><b>Jawaban :</b> <br><span style="font-size: 22px"><?= $data_latihan['jawaban'][$i]?></span></div>
                                 <label for=""><b>Pembahasan</b></label>
 
