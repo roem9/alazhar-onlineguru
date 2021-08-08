@@ -275,7 +275,7 @@ class Tarkibi2 extends CI_CONTROLLER{
             if($pertemuan == "Pertemuan 7"){
                 $nilai = 0;
             } else {
-                $harian = $this->Admin_model->get_one("latihan_peserta", ["md5(id_kelas)" => $id_kelas, "id_user" => $peserta['id_user'], "pertemuan" => $pertemuan, "latihan" => "Form", "nilai !=" => 0]);
+                $harian = $this->Admin_model->get_one("latihan_peserta", ["md5(id_kelas)" => $id_kelas, "id_user" => $peserta['id_user'], "pertemuan" => $pertemuan, "nilai !=" => 0]);
                 if($harian) {
                     $nilai = $harian['nilai'];
                 } else {

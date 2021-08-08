@@ -917,6 +917,13 @@
                         html += `<option value="`+pertemuan.materi+`">`+pertemuan.materi+`</option>`;
                     });
 
+                    html += `
+                        <option value="Review 1">Review Pekan 1</option>
+                        <option value="Review 2">Review Pekan 2</option>
+                        <option value="Review 3">Review Pekan 3</option>
+                        <option value="Review 4">Review Pekan 4</option>
+                    `;
+                    
                     html += `</select></div>
                             <div class="col-12 mb-4 d-flex justify-content-center">
                                 <a class="btn btn-md btn-outline-info text-light mr-2" id="btnAbsen">Presensi</a>
