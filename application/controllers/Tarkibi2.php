@@ -272,6 +272,7 @@ class Tarkibi2 extends CI_CONTROLLER{
         $data['latihan'] = [];
         $i = 0;
         foreach ($listpeserta as $peserta) {
+            unset($nilai);
             if($pertemuan == "Pertemuan 7"){
                 $nilai = 0;
             } else {
